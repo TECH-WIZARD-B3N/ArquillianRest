@@ -35,9 +35,9 @@ public interface CustomerResource {
 	User getTechiById(@PathParam("id") long id);
 	
 	@POST
-	@Path("/addUser")
+	@Path("/createUser")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	Response addUser(User user);
+	User createUser(String name, String adress);
 }
 

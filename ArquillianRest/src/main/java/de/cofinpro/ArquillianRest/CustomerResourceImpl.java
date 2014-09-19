@@ -2,7 +2,10 @@ package de.cofinpro.ArquillianRest;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.spi.HttpRequest;
@@ -36,8 +39,15 @@ public class CustomerResourceImpl implements CustomerResource {
 		return null;
 	}
 
-	public Response addUser(User user) {
-		// TODO Auto-generated method stub
+	public User createUser(String name, String adress) {
+		
+		if(name != null && adress != null) {
+			User user = new User();
+			user.setName(name);
+			user.setAdress(adress);
+			return user;
+		}
+		
 		return null;
 	}
 

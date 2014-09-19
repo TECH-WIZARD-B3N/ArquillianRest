@@ -58,24 +58,23 @@ public class RestClientTestCase {
 		assertEquals(givenName, user.getName());
 	}
 	
-	@Ignore
 	@Test
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void addUser(@ArquillianResteasyResource("/cofinpro/addUser") ResteasyWebTarget webTarget) {
+	public void addUser(@ArquillianResteasyResource("rest/cofinpro/createUser") ResteasyWebTarget webTarget) {
 		
 		//Given
 		final Invocation.Builder invocationBuilder = webTarget.request();
 	    invocationBuilder.acceptEncoding("UTF-8");
-	    invocationBuilder.accept(MediaType.APPLICATION_ATOM_XML_TYPE);
+	    invocationBuilder.accept(MediaType.APPLICATION_JSON);
 	    invocationBuilder.header("Authorization","Basic sialala");
-	    final Invocation invocation = invocationBuilder.buildPost(Entity.entity("{\"biskupa\":\"?upa\"}", MediaType.APPLICATION_JSON_TYPE));
+	    final Invocation invocation = invocationBuilder.buildPost(Entity.entity(new User(), MediaType.APPLICATION_JSON_TYPE));
 	    
 	    //      When
 	    final Response response = invocation.invoke();
 
 	    //        Then
-	    assertEquals(deploymentURL + "/cofinpro/addUser", webTarget.getUri().toASCIIString());
+	    assertEquals(deploymentURL + "rest/cofinpro/createUser", webTarget.getUri().toASCIIString());
 	    assertEquals(MediaType.APPLICATION_JSON, response.getMediaType().toString());
 	    assertEquals(HttpStatus.SC_OK, response.getStatus());
 	}
