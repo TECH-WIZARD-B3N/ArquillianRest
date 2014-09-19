@@ -16,6 +16,10 @@ import de.cofinpro.ArquillianRest.User;
 @Path("/cofinpro")
 public interface CustomerResource {
 
+	@POST
+	@Path("/login")
+	Response login();
+	
 	@GET
 	@Path("/techiUser")
 	@Produces(MediaType.APPLICATION_JSON)

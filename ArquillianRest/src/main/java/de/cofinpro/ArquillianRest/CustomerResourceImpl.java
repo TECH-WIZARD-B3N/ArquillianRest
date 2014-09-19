@@ -51,4 +51,9 @@ public class CustomerResourceImpl implements CustomerResource {
 		return null;
 	}
 
+	public Response login() {
+		
+		return null;
+	}
+
 }

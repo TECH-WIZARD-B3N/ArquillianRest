@@ -16,6 +16,7 @@ import org.apache.http.HttpStatus;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource;
+import org.jboss.arquillian.extension.rest.client.Header;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
@@ -43,6 +44,15 @@ public class RestClientTestCase {
     }
 	
 	@Test
+	@Header(name = "Authorization", value = "abcd")
+	public void login(@ArquillianResteasyResource CustomerResource customerResource) {
+
+		Response response = customerResource.login();
+		assertEquals(HttpStatus.SC_UNAUTHORIZED, response.getStatus());
+	}
+    
+	@Test
+	@Header(name = "Authorization", value = "abc")
 	public void getTechiById(@ArquillianResteasyResource CustomerResource customerResource) {
 
 		// Given
@@ -59,6 +69,7 @@ public class RestClientTestCase {
 	}
 	
 	@Test
+	@Header(name = "Authorization", value = "abc")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public void addUser(@ArquillianResteasyResource("rest/cofinpro/createUser") ResteasyWebTarget webTarget) {
@@ -67,7 +78,6 @@ public class RestClientTestCase {
 		final Invocation.Builder invocationBuilder = webTarget.request();
 	    invocationBuilder.acceptEncoding("UTF-8");
 	    invocationBuilder.accept(MediaType.APPLICATION_JSON);
-	    invocationBuilder.header("Authorization","Basic sialala");
 	    final Invocation invocation = invocationBuilder.buildPost(Entity.entity(new User(), MediaType.APPLICATION_JSON_TYPE));
 	    
 	    //      When
